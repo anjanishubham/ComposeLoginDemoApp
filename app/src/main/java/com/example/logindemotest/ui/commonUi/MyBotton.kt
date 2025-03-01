@@ -1,5 +1,7 @@
 package com.example.logindemotest.ui.commonUi
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -21,11 +23,15 @@ fun MyButton(modifier: Modifier = Modifier,
              ) {
 
     Button(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
         onClick = onClick,
         shape = shape,
         colors = color
     ) {
         Text("Click Me")
+      //  MyTextView("click me")
     }
 
 }

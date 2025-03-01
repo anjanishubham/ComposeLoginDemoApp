@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.logindemotest.model.ScreenName
 import com.example.logindemotest.ui.screen.HomeScreen
 import com.example.logindemotest.ui.screen.Login
 import com.example.logindemotest.ui.theme.LoginDemoTestTheme
@@ -41,10 +42,21 @@ class MainActivity : ComponentActivity() {
 
                       }
                    }
+
+                   scop.launch {
+                       viewModel.backButtonClickEvent.collect { screenName ->
+                           when(screenName){
+                               ScreenName.LOGIN_SCREEN -> loginState = false
+                               ScreenName.HOME_SCREEN -> loginState = false
+                           }
+                       }
+                   }
                }
 
                 if(loginState){
-                    HomeScreen()
+                    HomeScreen{ uiEvent ->
+                        viewModel.uiEvent(uiEvent)
+                    }
                 }else{
                     Login(state = state) { uiEvent ->
                         viewModel.uiEvent(uiEvent)

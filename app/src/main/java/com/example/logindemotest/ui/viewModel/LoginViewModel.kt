@@ -12,6 +12,7 @@ import com.example.logindemotest.events.userNameChangeListner
 import com.example.logindemotest.events.loginButtonClicked
 import com.example.logindemotest.events.passwordChangeListner
 import com.example.logindemotest.model.LoginModel
+import com.example.logindemotest.model.ScreenName
 import com.example.logindemotest.model.initInputFieldModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,22 +31,33 @@ class LoginViewModel @Inject constructor() : ViewModel() {
         private set
 
     val loginEvents = MutableSharedFlow<Boolean>()
-
+    val backButtonClickEvent = MutableSharedFlow<ScreenName>()
 
 
     fun uiEvent(event: UiEvent) {
         when (event) {
-            backBottonClicked -> {}
             loginButtonClicked -> {
                 buttonClicked()
             }
+
+            is backBottonClicked -> {
+                backButtonClicked(event.screenName)
+            }
+
             is userNameChangeListner -> {
                 userChangeListener(event.email)
             }
+
             is passwordChangeListner -> {
                 passwordChangeListener(event.password)
             }
         }
+    }
+
+    private fun backButtonClicked(screenName: ScreenName) {
+               viewModelScope.launch {
+                   backButtonClickEvent.emit(screenName)
+               }
     }
 
     private fun buttonClicked() {
@@ -75,3 +87,4 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 }
 
 private const val TAG = "LoginViewModel"
+

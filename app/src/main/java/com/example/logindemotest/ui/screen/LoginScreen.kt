@@ -7,19 +7,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.logindemotest.Utlis.LifeCycleEventObserver
 import com.example.logindemotest.events.UiEvent
+import com.example.logindemotest.events.backBottonClicked
 import com.example.logindemotest.events.loginButtonClicked
 import com.example.logindemotest.events.passwordChangeListner
 import com.example.logindemotest.events.userNameChangeListner
 import com.example.logindemotest.model.LoginModel
+import com.example.logindemotest.model.ScreenName
 import com.example.logindemotest.ui.commonUi.MyButton
 import com.example.logindemotest.ui.commonUi.MyOutlinedTextField
 import com.example.logindemotest.ui.commonUi.MyToolbar
-import kotlinx.coroutines.launch
 
 @Composable
 fun Login(modifier: Modifier = Modifier.fillMaxSize(),
@@ -29,7 +29,9 @@ fun Login(modifier: Modifier = Modifier.fillMaxSize(),
         topBar = {
             MyToolbar(
                 title = "Login"
-            )
+            ){
+                callback(backBottonClicked(ScreenName.LOGIN_SCREEN))
+            }
         }
     ) { paddingValues ->
 
